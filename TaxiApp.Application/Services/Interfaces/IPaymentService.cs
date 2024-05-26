@@ -11,6 +11,6 @@ namespace TaxiApp.Application.Services.Interfaces
     {
         Task<PaymentDto> GetPaymentByIdAsync(int id);
         Task<IEnumerable<PaymentDto>> GetAllPaymentsAsync();
-        Task AddPaymentAsync(PaymentDto payment);
+        Task<int> AddPaymentAsync(PaymentDto payment);
     }
 }

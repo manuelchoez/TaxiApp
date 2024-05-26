@@ -48,14 +48,14 @@ namespace TaxiApp.Infraestructure.Data
         public async Task<Driver> Insert(Driver driver)
         {
             await _context.Drivers.AddAsync(driver);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             driver = await GetDriverByName(driver.Name);
             return driver;
         }
 
         public async Task<Driver> Update(Driver driver)
         {
-           Driver item = _context.Drivers.Find(driver.DriverId);
+           Driver? item = _context.Drivers.Find(driver.DriverId);
           if (item != null)
               {
                 item.Name = driver.Name;

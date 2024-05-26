@@ -1,16 +1,21 @@
+using Microsoft.EntityFrameworkCore;
+using TaxiApp.Domain.Entities;
+using TaxiApp.Domain.Repository;
+using TaxiApp.Infraestructure.Data;
+
 public class RideRepository : IRideRepository
 {
-    private readonly TaxiAppDbContext _context;
+    private readonly TaxiDbContext _context;
 
-    public RideRepository(TaxiAppDbContext context)
+    public RideRepository(TaxiDbContext context)
     {
         _context = context;
     }
 
-    public async Task AddRideAsync(Ride ride)
+    public async Task<int> AddRideAsync(Ride ride)
     {
         _context.Rides.Add(ride);
-        await _context.SaveChangesAsync();
+        return await _context.SaveChangesAsync();
     }
 
     public async Task<IEnumerable<Ride>> GetAllRidesAsync()
@@ -20,6 +25,8 @@ public class RideRepository : IRideRepository
 
     public async Task<Ride> GetRideByIdAsync(int id)
     {
-        return await _context.Rides.FindAsync(id);
+        Ride? ride = new Ride();
+        ride = await _context.Rides.FindAsync(id);
+        return ride;
     }
 }

@@ -4,16 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaxiApp.Domain.Dto;
+using TaxiApp.Domain.Entities;
 
 namespace TaxiApp.Application.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<UserDto> Insert(UserDto user);
-        Task<UserDto> Update(UserDto user);
-        Task<int> Delete(UserDto user);
-        Task<UserDto> GetUserById(int id);
-        Task<IEnumerable<UserDto>> GetAllUsers();
-        Task<UserDto> GetUserByName(string name);
+        Task<UserDto> GetUserByIdAsync(int id);
+        Task<IEnumerable<UserDto>> GetAllUsersAsync();
+        Task<int> AddUserAsync(UserDto user);
     }
 }

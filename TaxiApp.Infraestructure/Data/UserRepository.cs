@@ -1,16 +1,21 @@
+using Microsoft.EntityFrameworkCore;
+using TaxiApp.Domain.Entities;
+using TaxiApp.Domain.Repository;
+using TaxiApp.Infraestructure.Data;
+
 public class UserRepository : IUserRepository
 {
-    private readonly TaxiAppDbContext _context;
+    private readonly TaxiDbContext _context;
 
-    public UserRepository(TaxiAppDbContext context)
+    public UserRepository(TaxiDbContext context)
     {
         _context = context;
     }
 
-    public async Task AddUserAsync(User user)
+    public async Task<int> AddUserAsync(User user)
     {
         _context.Users.Add(user);
-        await _context.SaveChangesAsync();
+        return await _context.SaveChangesAsync();
     }
 
     public async Task<IEnumerable<User>> GetAllUsersAsync()

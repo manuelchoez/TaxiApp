@@ -1,16 +1,21 @@
+using Microsoft.EntityFrameworkCore;
+using TaxiApp.Domain.Entities;
+using TaxiApp.Domain.Repository;
+using TaxiApp.Infraestructure.Data;
+
 public class VehicleRepository : IVehicleRepository
 {
-    private readonly TaxiAppDbContext _context;
+    private readonly TaxiDbContext _context;
 
-    public VehicleRepository(TaxiAppDbContext context)
+    public VehicleRepository(TaxiDbContext context)
     {
         _context = context;
     }
 
-    public async Task AddVehicleAsync(Vehicle vehicle)
+    public async Task<int> AddVehicleAsync(Vehicle vehicle)
     {
         _context.Vehicles.Add(vehicle);
-        await _context.SaveChangesAsync();
+        return await _context.SaveChangesAsync();
     }
 
     public async Task<IEnumerable<Vehicle>> GetAllVehiclesAsync()

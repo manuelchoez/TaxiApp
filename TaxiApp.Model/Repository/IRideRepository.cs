@@ -11,6 +11,6 @@ namespace TaxiApp.Domain.Repository
     {
         Task<Ride> GetRideByIdAsync(int id);
         Task<IEnumerable<Ride>> GetAllRidesAsync();
-        Task AddRideAsync(Ride ride);
+        Task<int> AddRideAsync(Ride ride);
     }
 }

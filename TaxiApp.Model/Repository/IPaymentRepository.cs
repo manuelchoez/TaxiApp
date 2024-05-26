@@ -11,6 +11,6 @@ namespace TaxiApp.Domain.Repository
     {
         Task<Payment> GetPaymentByIdAsync(int id);
         Task<IEnumerable<Payment>> GetAllPaymentsAsync();
-        Task AddPaymentAsync(Payment payment);
+        Task<int> AddPaymentAsync(Payment payment);
     }
 }

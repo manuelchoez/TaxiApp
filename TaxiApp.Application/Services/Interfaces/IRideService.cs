@@ -4,16 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaxiApp.Domain.Dto;
+using TaxiApp.Domain.Entities;
 
 namespace TaxiApp.Application.Services.Interfaces
 {
     public interface IRideService
     {
-        Task<RideDto> Insert(RideDto ride);
-        Task<RideDto> Update(RideDto ride);
-        Task<int> Delete(RideDto ride);
-        Task<RideDto> GetRideById(int id);
-        Task<IEnumerable<RideDto>> GetAllRides();
-        Task<RideDto> GetRideByName(string name);
+        Task<RideDto> GetRideByIdAsync(int id);
+        Task<IEnumerable<RideDto>> GetAllRidesAsync();
+        Task<int> AddRideAsync(RideDto ride);
     }
 }

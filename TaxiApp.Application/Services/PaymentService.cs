@@ -1,5 +1,6 @@
 using TaxiApp.Application.Services.Interfaces;
 using TaxiApp.Domain.Dto;
+using TaxiApp.Domain.Entities;
 using TaxiApp.Domain.Repository;
 
 public class PaymentService : IPaymentService
@@ -11,53 +12,36 @@ public class PaymentService : IPaymentService
         _paymentRepository = paymentRepository;
     }
 
-    public async Task AddPaymentAsync(PaymentDto paymentDto)
+    public async Task<int> AddPaymentAsync(PaymentDto paymentDto)
     {
-        var payment = new Payment
-        {
-            // Aquí debes mapear las propiedades de paymentDto a las de payment
-            // Por ejemplo:
-            // Id = paymentDto.Id,
-            // Amount = paymentDto.Amount,
-            // Date = paymentDto.Date,
-            // etc.
-        };
+        Payment payment = new Payment();
+        payment.Amount = paymentDto.Amount;
+        payment.PaymentId = paymentDto.PaymentId;
+        payment.PaymentTime = paymentDto.PaymentTime;
+        payment.RideId = paymentDto.RideId;
 
-        await _paymentRepository.AddPaymentAsync(payment);
+         return   await _paymentRepository.AddPaymentAsync(payment);        
     }
 
     public async Task<IEnumerable<PaymentDto>> GetAllPaymentsAsync()
     {
-        var payments = await _paymentRepository.GetAllPaymentsAsync();
-
-        return payments.Select(payment => new PaymentDto
+        return (await _paymentRepository.GetAllPaymentsAsync()).Select(p => new PaymentDto
         {
-            // Aquí debes mapear las propiedades de payment a las de PaymentDto
-            // Por ejemplo:
-            // Id = payment.Id,
-            // Amount = payment.Amount,
-            // Date = payment.Date,
-            // etc.
+            Amount = p.Amount,
+            PaymentId = p.PaymentId,
+            PaymentTime = p.PaymentTime,
+            RideId = p.RideId
         });
     }
 
     public async Task<PaymentDto> GetPaymentByIdAsync(int id)
     {
-        var payment = await _paymentRepository.GetPaymentByIdAsync(id);
-
-        if (payment == null)
+        return (await _paymentRepository.GetPaymentByIdAsync(id)) is Payment payment ? new PaymentDto
         {
-            return null;
-        }
-
-        return new PaymentDto
-        {
-            // Aquí debes mapear las propiedades de payment a las de PaymentDto
-            // Por ejemplo:
-            // Id = payment.Id,
-            // Amount = payment.Amount,
-            // Date = payment.Date,
-            // etc.
-        };
+            Amount = payment.Amount,
+            PaymentId = payment.PaymentId,
+            PaymentTime = payment.PaymentTime,
+            RideId = payment.RideId
+        } : null!;
     }
 }

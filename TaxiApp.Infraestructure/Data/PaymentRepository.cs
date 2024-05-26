@@ -18,10 +18,10 @@ namespace TaxiApp.Infraestructure.Data
             _context = context;
         }
 
-        public async Task AddPaymentAsync(Payment payment)
+        public async Task<int> AddPaymentAsync(Payment payment)
         {
             _context.Payments.Add(payment);
-            await _context.SaveChangesAsync();
+           return await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Payment>> GetAllPaymentsAsync()

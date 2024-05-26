@@ -11,6 +11,6 @@ namespace TaxiApp.Domain.Repository
     {
         Task<Vehicle> GetVehicleByIdAsync(int id);
         Task<IEnumerable<Vehicle>> GetAllVehiclesAsync();
-        Task AddVehicleAsync(Vehicle vehicle);
+        Task<int> AddVehicleAsync(Vehicle vehicle);
     }
 }
