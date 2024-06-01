@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using System.Diagnostics;
 using System.Security.Cryptography.Xml;
 using TaxiApp.Application.Services;
 using TaxiApp.Application.Services.Interfaces;
@@ -9,8 +10,8 @@ using TaxiApp.Infraestructure.Log;
 
 var builder = WebApplication.CreateBuilder(args);
 
-SerilogHelper serilogHelper = new SerilogHelper(builder.Configuration);
-Log.Logger = serilogHelper.SerilogConfiguration().CreateLogger();
+var loggerConfiguration = new SerilogHelper(builder.Configuration).SerilogConfiguration();
+Log.Logger = loggerConfiguration.CreateLogger();
 
 
 builder.Services.AddControllers();
@@ -31,7 +32,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IDriverService, DriverService>();
 
-
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog();
 
 var app = builder.Build();
 

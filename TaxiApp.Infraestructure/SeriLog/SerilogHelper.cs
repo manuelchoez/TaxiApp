@@ -19,9 +19,10 @@ namespace TaxiApp.Infraestructure.Log
         }
         public LoggerConfiguration SerilogConfiguration()
         {
-            return new LoggerConfiguration()
+            return new LoggerConfiguration()                
                 .WriteTo.PostgreSQL(_configuration.GetConnectionString("DefaultConnection"),
-                _configuration.GetSection(ConstantsConnection.LogTable).Value,                
+                _configuration.GetSection(ConstantsConnection.LogTable).Value,  
+                needAutoCreateTable: true,
                 restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Warning)                
                 .Enrich.FromLogContext();
         }
