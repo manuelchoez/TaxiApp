@@ -20,8 +20,16 @@ namespace TaxiApp.API.Controllers
         [Route("GetAllDrivers")]
         public async Task<IActionResult> GetAllDrivers()
         {
-            IEnumerable<DriverDto> response = await _driverService.GetAllDrivers();
-            return StatusCode(StatusCodes.Status200OK, response);
+            try
+            {
+                IEnumerable<DriverDto> response = await _driverService.GetAllDrivers();
+                return StatusCode(StatusCodes.Status200OK, response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message.ToString()+ " " + ex.InnerException.ToString() + " " + ex.StackTrace.ToString()  );                
+            }
+            
         }
 
         [HttpGet]

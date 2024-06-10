@@ -34,6 +34,8 @@ builder.Services.AddScoped<IDriverService, DriverService>();
 
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog();
+builder.WebHost.UseUrls("http://*:5026");
+
 
 var app = builder.Build();
 
@@ -45,10 +47,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<ErrorLoggingMiddleware>();
-app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
